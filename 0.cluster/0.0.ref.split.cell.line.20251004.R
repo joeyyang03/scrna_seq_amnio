@@ -10,12 +10,10 @@ library("edgeR")
 library(dplyr)
 
 ##############matrix.all for reference.data
-reference_data_celltype_barcode = read.csv(file = "/share/home/yangjingyi/project/1.BD/plot.final.v4/0.reference/1.0.output/reference_172_celltype_based_1000.csv", header=T, sep=",",stringsAsFactors = F, row.names = 1)
+reference_data_celltype_barcode = read.csv(file = "/share/home/yangjingyi/project/1.BD/up.load/1.cluster/0.0.output/reference_172_celltype_based_1000.csv", header=T, sep=",",stringsAsFactors = F, row.names = 1)
 reference_data_celltype_barcode$barcode <- gsub("-",".",reference_data_celltype_barcode$barcode)
-dim(reference_data_celltype_barcode)#119943      4
+dim(reference_data_celltype_barcode)
 table(reference_data_celltype_barcode$organ)
-##Adrenal ##Cerebellum   ##Cerebrum    ##Eye     ## Heart  Intestine     Kidney      Liver       Lung    ## Muscle   Pancreas   Placenta     ##Spleen    Stomach     ##Thymus 
-#9706       9000       8036       9533      10834       9312       6894       8200       9865       5365      10755       7794       5886       6836       1927
 
 reference_data_celltype_barcode$cell.line <- NA
 
@@ -49,12 +47,11 @@ reference_data_celltype_barcode[grepl("Erythroblasts", reference_data_celltype_b
 reference_data_celltype_barcode[grepl("Thymic.epithelial.cells", reference_data_celltype_barcode$Organ_cell_lineage),]$cell.line <- "Hematopoietic.cells"
 reference_data_celltype_barcode[grepl("Thymocytes", reference_data_celltype_barcode$Organ_cell_lineage),]$cell.line <- "Hematopoietic.cells"
 table(reference_data_celltype_barcode$cell.line)
-#Epithelical.cells Hematopoietic.cells 
-#17816               28602
+
 reference_data_celltype_barcode <- reference_data_celltype_barcode[reference_data_celltype_barcode$organ %in% c("Intestine", "Kidney", "Liver", 
                                                                                                                 "Lung", "Pancreas", "Placenta", 
                                                                                                                 "Stomach"),]
-dim(reference_data_celltype_barcode)#59656      5
+dim(reference_data_celltype_barcode)
 
 reference_data_epi_barcode <- reference_data_celltype_barcode[reference_data_celltype_barcode$cell.line %in% c("Epithelical.cells"),]
 reference_data_hemato_barcode <- reference_data_celltype_barcode[reference_data_celltype_barcode$cell.line %in% c("Hematopoietic.cells"),]
@@ -63,7 +60,7 @@ reference_data_hemato_barcode <- reference_data_celltype_barcode[reference_data_
 ########################################
 reference_data1 = read.csv(file = "/share/home/yangjingyi/project/1.BD/plot.final.v4/0.reference/2.0.output/reference_selected_matrix_20250326.csv", header=T, sep=",",stringsAsFactors = F, row.names = 1)
 reference_data1[1:10,1:10]
-#56622 obs of 119943 variables
+
 rownames(reference_data1) <- reference_data1$gene
 reference_data1 <- select(reference_data1,-gene)
 save(reference_data1, file = "/share/home/yangjingyi/project/1.BD/up.load/1.cluster/0.0.output/0.0.reference_data.1.20251004.Robj")
